@@ -141,7 +141,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-MONOBANK_TOKEN = 'uLOLspnKYUQKySzlC1k1v6zZLzh1kvBMrQ0IPUxhetIQ'
+MONOBANK_TOKEN = 'test'
 
 
 

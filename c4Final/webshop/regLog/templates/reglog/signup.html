@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<h1 class="text-center" style="color: #432152;">Signup</h1>
+<form method="POST" action="{% url 'signup' %}" class="form-control mx-auto" style="max-width: 300px;">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary btn-block" style="background-color:#906ab6; border-color: #432152;">Sign up</button>
+    <a href="{% url 'login' %}">Already have an account?</a>
+</form>
+
+{% endblock %}

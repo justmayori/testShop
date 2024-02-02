@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.name }}</title>
+</head>
+<main class="container">
+ 
+    <div class="left-column">
+      <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          {% for image in images %}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
+        </div>
+        <div class="carousel-inner">
+          {% for image in images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %} product-image">
+              <img src="{{ image.image.url }}" class="d-block w-1" alt="{{ product.name }}">
+            </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+        <span style="color: #E0AED0; font-size: 40px; cursor: pointer; font-weight: bold;" onclick="window.location='{% url 'all_reviews' product.category product.id  %}'">Reviews</span>
+        {% for review in reviews|slice:"::-1"|slice:":5" %}
+                <div style="background-color: #E0AED0; padding: 10px; margin-bottom: 10px;">
+                  <p>{{ review.user.username }}: 
+                      {% if review.text %}
+                          {{ review.text }}
+                      {% endif %}
+                  </p>
+                  <p>Rating: {{ review.rating }}</p>
+                  <p>
+                      {% if review.advantages %}
+                          Advantages: {{ review.advantages }}
+                      {% endif %}
+                  </p>
+                  <p>
+                      {% if review.disadvantages %}
+                          Disadvantages: {{ review.disadvantages }}
+                      {% endif %}
+                  </p>
+                </div>
+        {% endfor %}
+      
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#906ab6; border-color: #432152;">
+          Add Review
+        </button>
+      </div>
+
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Write a Review</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      {% if user.is_authenticated %}
+                          <p>You are logged in. Write your review:</p>
+                          <form method="POST">
+                              {% csrf_token %}
+                              {{ form.as_p }}
+                              <button type="submit" class="btn btn-primary" style="background-color:#906ab6; border-color: #432152;">Submit Review</button>
+                          </form>
+                      {% else %}
+                          <p>You are not logged in. Please log in to write a review.</p>
+                          <form method="POST" action="{% url 'login' %}">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-primary">Log In</button>
+                          </form>
+                      {% endif %}
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:#906ab6; border-color: #432152;">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+   
+    <div class="right-column">
+      <div class="product-description">
+        <h1 class="h_name" style="font-size: 35px;" >{{ product.name }}</h1>
+      </div>
+      <p class="p_price">Price: {{ product.price }}$</p>
+      <form action="{% url 'cart:cart_add' product.id %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to cart" class="add_to">
+      </form>
+      <div class="description" style="font-size: 20px;">
+        <p >Description: {{ product.description }}</p>
+      </div>
+      <div class="characteristics">
+        <h2>Characteristics</h2>
+        <ul>
+            {% for stat in stats %}
+                <li>{{ stat.name }}: {{ stat.value }}</li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+

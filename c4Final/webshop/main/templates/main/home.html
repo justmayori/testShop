@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+    <body>
+        <h1>Products</h1>
+        <div class="product-container">
+            {% for product in products %}
+                <div class="product">
+                    <a href="{% url 'product' product.category product.id %}">
+                        {% include 'main/product.html' with product=product %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="recently">
+        <h1>Recently viewed</h1>
+            {% if recently_viewed %}
+            <ul>
+                {% for product in recently_viewed %}
+                    <li>
+                        <a href="{% url 'product' product.category product.id %}" style="color: #E0AED0; font-size: 20px; cursor: pointer; font-weight: bold;"> 
+                            <img src="{{ product.image_set.first.image.url }}" alt="{{ product.name }}" width="100">
+                            <strong>{{ product.name }} ({{ product.pk }})</strong>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p>No recently viewed products.</p>
+            {% endif %}
+        </div>  
+    </body>
+    </html>
+{% endblock %}

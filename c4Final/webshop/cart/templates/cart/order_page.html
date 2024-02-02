@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-center" style="color: #432152;">Your contact details</h1>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Masked Input from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+
+<form method="post" action="{% url 'cart:orderconf' %}" class="mx-auto" style="max-width: 900px;">
+    {% csrf_token %}
+
+    {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="mb-4">
+        <label for="form2Example1" class="form-label">Name</label>
+        <input type="text" id="form2Example1" class="form-control" name="name" />
+    </div>
+  
+    <div class="mb-4">
+        <label for="form2Example2" class="form-label">Email</label>
+        <input type="email" id="form2Example2" class="form-control" name="email" />
+    </div>
+
+    <div class="mb-4">
+        {% if cart %}
+        <p class="mb-5 text-center">
+            <i class="text-info font-weight-bold"></i></p>
+            <table class="table table-primary table-striped">
+            <thead>
+                <tr>
+                    <th style="width:30%">Product</th>
+                    <th style="width:12%">Price per unit</th>
+                    <th style="width:10%">Quantity</th>
+                    <th style="width:12%">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <tr>
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-md-9 text-left mt-sm-2">
+                                        <h5>{{ product.name }}</h5>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="num">{{ item.price }}$</td>  
+                                <td data-th="Quantity">
+                                    <div class="col-md-9 text-left mt-sm-2">
+                                        {{ item.quantity }}
+                                    </div>  
+                                </td>
+                                <td class="num">{{ item.total_price }}$</td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+                </tbody>
+            {% endif %}  
+            </table>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Total:</h4>
+        <h1>{{ cart.get_total_price }}$  <button type="submit" class="btn btn-primary btn-block" style="background-color:#906ab6; border-color: #432152;">Pay</button></h1>
+    </div>
+</form>
+
+{% endblock %}

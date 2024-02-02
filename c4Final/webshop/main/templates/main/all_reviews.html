@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Reviews for {{ product.name }}</title>
+</head>
+<body>
+    <h1>All Reviews for {{ product.name }}</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#906ab6; border-color: #432152;">
+        Add Review
+    </button>
+    {% for review in reviews|slice:"::-1"|slice:":5" %}
+    <div style="background-color: #E0AED0; padding: 10px; margin-bottom: 10px;">
+      <p>{{ review.user.username }}: 
+          {% if review.text %}
+              {{ review.text }}
+          {% endif %}
+      </p>
+      <p>Rating: {{ review.rating }}</p>
+      <p>
+          {% if review.advantages %}
+              Advantages: {{ review.advantages }}
+          {% endif %}
+      </p>
+      <p>
+          {% if review.disadvantages %}
+              Disadvantages: {{ review.disadvantages }}
+          {% endif %}
+      </p>
+    </div>
+{% endfor %}
+
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Write a Review</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if user.is_authenticated %}
+                    <p>You are logged in. Write your review:</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary" style="background-color:#906ab6; border-color: #432152;">Submit Review</button>
+                    </form>
+                {% else %}
+                    <p>You are not logged in. Please log in to write a review.</p>
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Log In</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:#906ab6; border-color: #432152;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</html>
+{% endblock %}
+
+

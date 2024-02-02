@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+{% block content %}
+    <div class="col-lg-12 col-md-12 col-12">
+    <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
+    {% if cart %}
+        <p class="mb-5 text-center">
+            <i class="text-info font-weight-bold"></i></p>
+            <table class="table table-primary table-striped">
+            <thead>
+                <tr>
+                    <th style="width:30%">Product</th>
+                    <th style="width:12%">Price per unit</th>
+                    <th style="width:10%">Quantity</th>
+                    <th style="width:12%">Price</th>
+                    <th style="width:12%">Remove</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <tr>
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-md-3 text-left">
+                                        <img src="{% if product.image_set.first.image %}{{ product.image_set.first.image.url }}{% else %}{% static 'path/to/placeholder_image.jpg' %}{% endif %}" width="100" height="100">
+                                    </div>
+                                    <div class="col-md-9 text-left mt-sm-2">
+                                        <h4>{{ product.name }}</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="num">{{ item.price }}$</td>  
+                            <td data-th="Quantity">
+                                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                    {{ item.update_quantity_form.quantity }}
+                                    {{ item.update_quantity_form.override }}
+                                    <input type="submit" value="Update">
+                                    {% csrf_token %}
+                                </form>
+                            </td>
+                            <td class="num">{{ item.total_price }}$</td>
+                            <td>
+                                <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                                    <input type="submit" value="Remove">
+                                    {% csrf_token %}
+                                </form>
+                            </td>
+                        </tr>
+                        {% endwith %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row float-right text-right">
+                    <div class="col-md-6">
+                        <h4>Total:</h4>
+                        <h1>{{ cart.get_total_price }}$</h1>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            <a class="btn btn-primary" href="{% url 'home' %}" role="button" style="background-color:#906ab6; border-color: #432152;">Continue Shopping</a>
+                            <a class="btn btn-primary" href="{% url 'cart:order' %}" role="button" style="background-color:#906ab6; border-color: #432152;">CheckOut</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">Your cart is empty.</p>
+        <p class="text-center">
+            <a class="btn btn-primary" href="{% url 'home' %}" role="button" style="background-color:#906ab6; border-color: #432152;">Continue Shopping</a>
+        </p>
+    {% endif %}
+{% endblock %}

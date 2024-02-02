@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+{% block content %}
+    {% csrf_token %}
+    <h1>Result of search: {{ q }}</h1>
+    <br/>
+
+    {% if queryset %}
+        {% for product in queryset %}
+            <a href="{% url 'product' product.category product.id%}">
+                {% include 'main/product.html' with product=product %}
+            </a><br/>
+        {% endfor %}
+    {% else %}
+        <p>No products found for your search.</p>
+    {% endif %}
+
+    {% for page_num in count_pages %}
+        <a href="?page={{ page_num }}&q={{ q }}" class="page">{{ page_num }}</a>
+    {% endfor %}
+{% endblock %}  
+</body>
+</html>

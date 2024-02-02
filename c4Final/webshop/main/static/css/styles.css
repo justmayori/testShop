@@ -1,0 +1,159 @@
+/* styles.css */
+
+/* Стили для кнопки по умолчанию */
+.btn-outline-success {
+    color: #432152; /* Цвет текста */
+    background-color: #E0AED0; /* Цвет фона */
+    border-color: #432152; /* Цвет границы */
+    border-radius: 11px;
+}
+
+.search-bg {
+    background-color: #FFE5E5;
+    border-radius: 11px;
+    width:430px !important;
+
+}
+
+.form-control {
+    border-color: #432152; /* Цвет границы */
+}
+
+/* Стили для кнопки при наведении */
+.btn-outline-success:hover {
+    color: #432152;
+    background-color: #FFE5E5;
+    border-color: #432152;
+}
+
+.bi-cart3 {
+    
+    fill: #432152/* Замените "your-desired-color" на цвет, который вы хотите использовать */
+}
+
+.bg-custom-color {
+    background-color: #432152;
+}
+.style-css {
+    font-size: 15px;
+    
+    color: #FFE5E5; /* Цвет шрифта */
+    border-radius: 15px; /* Закругление углов */
+    font-weight: bold;
+    border: 3px solid #E0AED0;
+    transition: color 0.3s;
+}
+
+.style-css:hover {
+    color: #432152/* ваш цвет при наведении */;
+}
+
+.style-css:active,
+.style-css:focus {
+    color: #432152/* ваш цвет при нажатии или фокусе */;
+}
+   
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+    display: flex;
+  }
+
+  .left-column {
+    width: 550px;
+    position: relative;
+    margin-left: -20px;
+  }
+   
+  .right-column {
+    width: 35%;
+    margin-top: 60px;
+    margin-left: 70px; 
+  }
+
+  .product-image {
+    max-width: auto;
+    height: auto;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: carousel-control-icon-width;
+    height: carousel-control-icon-width;
+}
+
+.reviews {
+    
+    color:#432152;
+    font-size: 16px;
+}
+
+.h_name {
+    color:#432152;
+    font-size: 20px !important;
+    margin-top: -80px;
+    font-weight: bold;
+
+}
+.p_price {
+    color:#432152;
+    font-size: 60px;
+    
+
+}
+.description {
+    color:#432152;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.add_to {
+    background-color:#906ab6;
+    width: 200px;
+    font-weight: 600;
+    color: white;
+    border-radius: 15px;
+
+}
+.add_to:hover {
+    color: #432152;
+   
+
+}
+
+.characteristics {
+    background-color:#E0AED0;
+    font-weight: 600;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product {
+    flex-basis: calc(15% - 10px); 
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.product_view {
+
+    color: #432152;
+}
+
+.recently {
+
+    color: #432152;
+    font-weight: bold;
+
+}
+

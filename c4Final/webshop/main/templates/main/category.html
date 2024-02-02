@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+    <body>
+
+        <h1>{{ category.name }}</h1>
+
+        {% for product in products_by_category %}
+        <div class="product">
+            <a href="{% url 'product' product.category product.id  %}">
+                {% include 'main/product.html' with product=product %}
+            </a>
+        </div>
+        {% endfor %}
+        {% for page in count_pages %}
+            <a href="?page={{ page }}" class="page">{{ page }}</a>
+        {% endfor %}
+
+
+    </body>
+    </html>
+{% endblock %}

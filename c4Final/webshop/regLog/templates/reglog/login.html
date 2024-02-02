@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<h1 class="text-center" style="color: #432152;">Login</h1>
+<form method="post" action="{% url 'login' %}" class="mx-auto" style="max-width: 300px;">
+    {% csrf_token %}
+    
+    <!-- {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %} -->
+
+    {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="mb-4">
+        <label for="form2Example1" class="form-label">Username</label>
+        <input type="text" id="form2Example1" class="form-control" name="username" />
+    </div>
+  
+    <div class="mb-4">
+        <label for="form2Example2" class="form-label">Password</label>
+        <input type="password" id="form2Example2" class="form-control" name="password" />
+    </div>
+  
+    <div class="mb-4">
+        <button type="submit" class="btn btn-primary btn-block" style="background-color:#906ab6; border-color: #432152;">Sign in</button>
+    </div>
+    
+    <div class="text-center">
+        <p>Not a member? <a href="{% url 'signup' %}">Register</a></p>
+    </div>
+</form>
+{% endblock %}
